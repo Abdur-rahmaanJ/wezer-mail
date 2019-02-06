@@ -1,3 +1,4 @@
+
 from bs4 import BeautifulSoup
 
 import requests
@@ -47,6 +48,9 @@ info = {'general':data[0][0],
         'headline':news[0]}
 
 headline = decide_headline(info['portlouis'])
+
 with open('subs.txt', 'r') as f:
+
     for mail in f:
         send_mail(mail, headline, info['headline'])
+print(1)

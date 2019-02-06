@@ -5,12 +5,13 @@ from email.mime.text import MIMEText
 from email.header import Header
 import time
 from jinja2 import Environment, FileSystemLoader
-
-MYMAIL = ''
-MYPASS = ''
+import configparser
 
 def send_mail(to_, subject_, body_):
-    global MYMAIL, MYPASS
+    config = configparser.ConfigParser()
+    config.read('settings.cfg')
+    MYMAIL = config['mail']['user']
+    MYPASS = config['mail']['password']
     fromaddr =MYMAIL
     toaddr=to_
     thesub=subject_
@@ -41,3 +42,10 @@ def send_mail(to_, subject_, body_):
     
 def todays_date():
     return time.strftime("%d/%m/%Y")
+
+def template(filename_)
+    file_loader = FileSystemLoader('templates')
+    env = Environment(loader=file_loader)
+    template = env.get_template(filename)
+    #output = template.render()
+    return template
