@@ -3,12 +3,16 @@ from bs4 import BeautifulSoup
 
 import requests
 
-from utils import send_mail, todays_date
+from utils import send_mail, todays_date, template
 
 def decide_headline(headline_):
     headline = ''
-    if 'showers' in headline_:
+    if 'showers' in headline_ and 'localised' in headline_:
+        headline = 'no need for umbrella'
+    elif 'showers' in headline_ and 'passing' in headline_:
         headline = 'take umbrella'
+    elif 'showers' in headline_:
+        headline = 'no need worry about rain'
     elif 'cloudy' in headline_:
         headline = 'some light protection needed'
     else:
@@ -47,10 +51,10 @@ info = {'general':data[0][0],
         'portlouis':data[7][0],
         'headline':news[0]}
 
-headline = decide_headline(info['portlouis'])
+headline = decide_headline(info['general'])
+#print(info, headline)
 
 with open('subs.txt', 'r') as f:
-
     for mail in f:
-        send_mail(mail, headline, info['headline'])
-print(1)
+        send_mail(mail, headline, template('base.html').render(news=info['headline'], general=info['general']))
+

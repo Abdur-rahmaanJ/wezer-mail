@@ -43,9 +43,9 @@ def send_mail(to_, subject_, body_):
 def todays_date():
     return time.strftime("%d/%m/%Y")
 
-def template(filename_)
+def template(filename_):
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
-    template = env.get_template(filename)
+    template = env.get_template(filename_)
     #output = template.render()
     return template
